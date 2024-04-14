@@ -1057,7 +1057,7 @@ function alphabet(firstLetter) {
 
 function gtfsrt() {
   return new Promise((resolve, reject) => {
-    protobuf.load('GTFS-realtime.proto', function(err, root) {
+    protobuf.load('gtfs-realtime.proto', function(err, root) {
       if (err)
         reject(err);
 

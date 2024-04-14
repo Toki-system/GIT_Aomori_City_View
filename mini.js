@@ -14,7 +14,7 @@ function addMinutesToTime(time, minutesToAdd) { // 時刻に分を加算
   return hours + ":" + minutes;
 }
 
-function show_popup(fontcolor, bgcolor, text, faicon) { // ポップアップを表示する
+function show_popup(fontcolor, bgcolor, text, faicon,timer) { // ポップアップを表示する
   document.getElementById("popup").style.display = null;
   document.getElementById("popup").style.background = bgcolor;
   document.getElementById("popclose").style.color = fontcolor;
@@ -22,9 +22,17 @@ function show_popup(fontcolor, bgcolor, text, faicon) { // ポップアップを
   document.getElementById("poptext").style.color = fontcolor;
   document.getElementById("poptext").innerHTML = text;
   document.getElementById("popicon").setAttribute("class", faicon);
-  setTimeout(() => {
-    document.getElementById('popup').style.display = 'none';
-  }, 5000);
+  if (timer!==true&&timer!==false) {
+    setTimeout(() => {
+      document.getElementById('popup').style.display = 'none';
+    }, timer*1000);
+  }
+  if (timer===false) {
+    document.getElementById("popclose").style.display = 'none';
+  } else {
+    document.getElementById("popclose").style.display = null;
+
+  }
 }
 
 function averageUnixTime(unixTimes) { // UNIX時間の合計を計算
@@ -119,7 +127,7 @@ let dic = [];
 fetch('bus_lines.json').then(response => response.json()).then(data => {
   dic = [...data];
 }).catch(error => {
-  show_popup("#fff", "#ef665b", "情報の収集に失敗しました。", "fa-solid fa-circle-exclamation");
+  show_popup("#fff", "#ef665b", "情報の収集に失敗しました。", "fa-solid fa-circle-exclamation",5);
 });
 // グラデーションを持つCircleMarkerを描画する関数
 function createGradientCircleMarker(latlng, radius) {
@@ -168,7 +176,7 @@ function currentWatch() {
   }
 
   function error(err) {
-    show_popup("#fff", "#ef665b", "位置情報を取得できませんでした。", "fa-solid fa-circle-exclamation");
+    show_popup("#fff", "#ef665b", "位置情報を取得できませんでした。", "fa-solid fa-circle-exclamation",5);
   }
   var options = {
     enableHighAccuracy: true,
@@ -226,6 +234,7 @@ async function makemap(lat, lon, zoom, flag) {
     iconSize: [15, 42] // アイコンサイズ
   });
   map = L.map('map'); // 'map' に表示する地図を変数 map で指定
+  map.zoomControl.setPosition('topright');
   var google = L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
     attribution: "<a href='https://aomoricitybus.com/buslocation/' target='_blank'>青ロケ マップ</a>｜<a href='https://developers.google.com/maps/documentation' target='_blank'>Google Map</a>｜<a href='https://nucbox5.dorper-royal.ts.net/' target='_blank'>Toki's system</a>"
   });
@@ -322,7 +331,7 @@ async function makemap(lat, lon, zoom, flag) {
     return new Promise((resolve, reject) => {
       fetch(url).then(response => {
         if (!response.ok) {
-          show_popup("#fff", "#ef665b", "情報の収集に失敗しました。", "fa-solid fa-circle-exclamation");
+          show_popup("#fff", "#ef665b", "情報の収集に失敗しました。", "fa-solid fa-circle-exclamation",5);
           throw new Error("Network response was not ok");
         }
         return response.json();
@@ -331,7 +340,7 @@ async function makemap(lat, lon, zoom, flag) {
           console.log("現在走行中のバス数：" + data.length);
           delelement = [];
           if (data.length == 0) {
-            show_popup("#fff", "#ef665b", "現在運行中のバスはありません。", "fa-solid fa-circle-exclamation");
+            show_popup("#fff", "#ef665b", "現在運行中のバスはありません。", "fa-solid fa-circle-exclamation",5);
             document.getElementById("tit").innerHTML = "運行データなし";
             document.getElementById("time").innerHTML = "現在、バスはありません。";
           }
@@ -636,13 +645,13 @@ async function makemap(lat, lon, zoom, flag) {
           }
         });
         formatTime(timelist);
-        document.getElementById("loading").style.display = "none";
-        document.getElementById("loadingdiv").style.display = "none";
+        // document.getElementById("loading").style.display = "none";
+        // document.getElementById("loadingdiv").style.display = "none";
         resolve(); // 成功したらresolveを呼ぶ
       }).catch(error => {
-        show_popup("#fff", "#ef665b", "情報の収集に失敗しました。", "fa-solid fa-circle-exclamation");
-        document.getElementById("loadingdiv").style.display = "none";
-        document.getElementById("loading").style.display = "none";
+        show_popup("#fff", "#ef665b", "情報の収集に失敗しました。", "fa-solid fa-circle-exclamation",5);
+        // document.getElementById("loadingdiv").style.display = "none";
+        // document.getElementById("loading").style.display = "none";
         reject(error); // エラーが発生したらrejectを呼ぶ
       });
     });
@@ -669,12 +678,12 @@ async function makemap(lat, lon, zoom, flag) {
         });;
         return buslist
       }).then(data => {
-        console.log(data);
+        console.table(data);
         if (markerLayer == "busmarker") {
           console.log("現在走行中のバス数：" + data.length);
           delelement = [];
           if (data.length == 0) {
-            show_popup("#fff", "#ef665b", "現在運行中のバスはありません。", "fa-solid fa-circle-exclamation");
+            show_popup("#fff", "#ef665b", "現在運行中のバスはありません。", "fa-solid fa-circle-exclamation",5);
             document.getElementById("tit").innerHTML = "運行データなし";
             document.getElementById("time").innerHTML = "現在、バスはありません。";
           }
@@ -943,25 +952,83 @@ async function makemap(lat, lon, zoom, flag) {
           }
         });
         formatTime(timelist);
-        document.getElementById("loading").style.display = "none";
-        document.getElementById("loadingdiv").style.display = "none";
+        // document.getElementById("loading").style.display = "none";
+        // document.getElementById("loadingdiv").style.display = "none";
         resolve(); // 成功したらresolveを呼ぶ
       }).catch(error => {
-        show_popup("#fff", "#ef665b", "情報の収集に失敗しました。", "fa-solid fa-circle-exclamation");
-        document.getElementById("loadingdiv").style.display = "none";
-        document.getElementById("loading").style.display = "none";
+        show_popup("#fff", "#ef665b", "情報の収集に失敗しました。", "fa-solid fa-circle-exclamation",5);
+        // document.getElementById("loadingdiv").style.display = "none";
+        // document.getElementById("loading").style.display = "none";
         reject(error); // エラーが発生したらrejectを呼ぶ
       });
     });
   }
   try {
     await fetchShopData("bus.json", "busstop", BusIcon);
-    const responsetime = await fetch("https://nucbox5.dorper-royal.ts.net/gtfstime");
-    datatime = await responsetime.json();
+
+    gtfstime()
+    .then(parsedData => {
+      // console.log('Parsed data:', parsedData);
+      let bustimelist = [];
+      parsedData.entity.forEach(function(entity) {
+        // console.log(entity.tripUpdate.stopTimeUpdate);
+        if (entity.tripUpdate) {
+          //コンソールにデータを表示
+          bustimelist.push({
+            "busname": entity.tripUpdate.trip.tripId,
+            "currentStopSequence": entity.tripUpdate.stopTimeUpdate[0].stopSequence,
+            "delay": entity.tripUpdate.stopTimeUpdate[0].departure.delay,
+            "type": entity.tripUpdate.trip.tripId.match(/系統(\d+)/)[1]
+          });
+        }
+      });
+      // console.log(bustimelist);
+      datatime = bustimelist;
+      // パースされたデータを使う処理をここに記述
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+    show_popup("#fff", "#ef665b", "現在メンテナンス中です。<BR>不具合がある可能性があります。<BR>メンテナンスは4/15 17:00ごろに完了する予定です。", "fa-solid fa-circle-exclamation",false);
+    document.getElementById("loading").style.display = "none";
+  //   var Rectangle = L.rectangle([
+  //     [35.671,139.753],
+  //     [35.691,139.773]
+  // ],{
+  //     color: '#FF0000',
+  //     weight: 3,
+  //     opacity: 0.8,
+  //     fillColor: '#FF0000',
+  //     fillOpacity: 0.3
+  // }).addTo(map);
+    // const responsetime = await fetch("https://nucbox5.dorper-royal.ts.net/gtfstime");
+    // datatime = await responsetime.json();
     await fetchBusData("busmarker", BusIcon);
+
     setInterval(async () => {
-      const responsetime = await fetch("https://nucbox5.dorper-royal.ts.net/gtfstime");
-      datatime = await responsetime.json();
+      gtfstime()
+      .then(parsedData => {
+        // console.log('Parsed data:', parsedData);
+        let bustimelist = [];
+        parsedData.entity.forEach(function(entity) {
+          // console.log(entity.tripUpdate.stopTimeUpdate);
+          if (entity.tripUpdate) {
+            //コンソールにデータを表示
+            bustimelist.push({
+              "busname": entity.tripUpdate.trip.tripId,
+              "currentStopSequence": entity.tripUpdate.stopTimeUpdate[0].stopSequence,
+              "delay": entity.tripUpdate.stopTimeUpdate[0].departure.delay,
+              "type": entity.tripUpdate.trip.tripId.match(/系統(\d+)/)[1]
+            });
+          }
+        });
+        console.log(bustimelist);
+        datatime = bustimelist;
+        // パースされたデータを使う処理をここに記述
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
       await fetchBusData("busmarker", BusIcon);
 
     }, 15000);
@@ -982,10 +1049,11 @@ async function makemap(lat, lon, zoom, flag) {
     busmarker.addTo(map);
     L.control.layers(baseMaps, layers).addTo(map);
     document.getElementsByClassName("leaflet-control-layers-list")[0].style.zoom = 1.4;
+    
   } catch (error) {
-    show_popup("#fff", "#ef665b", "情報の収集に失敗しました。", "fa-solid fa-circle-exclamation");
-    document.getElementById("loadingdiv").style.display = "none";
-    document.getElementById("loading").style.display = "none";
+    show_popup("#fff", "#ef665b", "情報の収集に失敗しました。", "fa-solid fa-circle-exclamation",5);
+    // document.getElementById("loadingdiv").style.display = "none";
+    // document.getElementById("loading").style.display = "none";
   }
   FamilyMarted = true;
 }
@@ -1057,7 +1125,7 @@ function alphabet(firstLetter) {
 
 function gtfsrt() {
   return new Promise((resolve, reject) => {
-    protobuf.load('gtfs-realtime.proto', function(err, root) {
+    protobuf.load('GTFS-realtime.proto', function(err, root) {
       if (err)
         reject(err);
 
@@ -1088,3 +1156,40 @@ function gtfsrt() {
     });
   });
 }
+function gtfstime() {
+  return new Promise((resolve, reject) => {
+    protobuf.load('GTFS-realtime.proto', function(err, root) {
+      if (err)
+        reject(err);
+
+      var GtfsRealtime = root.lookupType("transit_realtime.FeedMessage");
+
+      function fetchDataFeed(url) {
+        return fetch(url)
+          .then(response => response.arrayBuffer())
+          .then(buffer => new Uint8Array(buffer))
+          .catch(error => {
+            reject('Error fetching data feed:', error);
+          });
+      }
+
+      function parseDataFeed(data) {
+        var message = GtfsRealtime.decode(data);
+
+        resolve(GtfsRealtime.toObject(message));
+      }
+
+      var dataFeedUrl = 'https://api-public.odpt.org/api/v4/gtfs/realtime/odpt_AomoriCity_AllLines_trip_update';
+
+      fetchDataFeed(dataFeedUrl)
+        .then(parseDataFeed)
+        .catch(error => {
+          reject(error);
+        });
+    });
+  });
+}
+
+// function name(params) {
+//   https://doko-train.jp/json/departure_info/122/2221110660_down.json?_=1713076988169
+// }

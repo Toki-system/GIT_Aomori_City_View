@@ -1,0 +1,98 @@
+[
+	{
+		"stop_id": "_01",
+		"stop_code": "",
+		"stop_name": "青森",
+		"furigana": "あおもり",
+		"stop_lat": 40.82884620000001,
+		"stop_lon": 140.7342745
+	},
+	{
+		"stop_id": "_01",
+		"stop_code": "",
+		"stop_name": "油川",
+		"furigana": "あぶらかわ",
+		"stop_lat": 40.8566945,
+		"stop_lon": 140.6905553
+	},
+	{
+		"stop_id": "_01",
+		"stop_code": "",
+		"stop_name": "津軽宮田",
+		"furigana": "つがるみやた",
+		"stop_lat": 40.8870515,
+		"stop_lon": 140.6743885
+	},
+	{
+		"stop_id": "_01",
+		"stop_code": "",
+		"stop_name": "奥内",
+		"furigana": "おくない",
+		"stop_lat": 40.9031329,
+		"stop_lon": 140.6721934
+	},
+	{
+		"stop_id": "_01",
+		"stop_code": "",
+		"stop_name": "左堰",
+		"furigana": "ひだりせき",
+		"stop_lat": 40.91751989999999,
+		"stop_lon": 140.6658043
+	},
+	{
+		"stop_id": "_01",
+		"stop_code": "",
+		"stop_name": "後潟",
+		"furigana": "うしろがた",
+		"stop_lat": 40.9313237,
+		"stop_lon": 140.6625261
+	},
+	{
+		"stop_id": "_01",
+		"stop_code": "",
+		"stop_name": "浅虫温泉",
+		"furigana": "あさむしおんせん",
+		"stop_lat": 40.8914457,
+		"stop_lon": 140.8623713
+	},
+	{
+		"stop_id": "_01",
+		"stop_code": "",
+		"stop_name": "野内",
+		"furigana": "のない",
+		"stop_lat": 40.8461441,
+		"stop_lon": 140.8169612
+	},
+	{
+		"stop_id": "_01",
+		"stop_code": "",
+		"stop_name": "矢田前",
+		"furigana": "やだまえ",
+		"stop_lat": 40.83381199999999,
+		"stop_lon": 140.8071016
+	},
+	{
+		"stop_id": "_01",
+		"stop_code": "",
+		"stop_name": "小柳",
+		"furigana": "こやなぎ",
+		"stop_lat": 40.8178969,
+		"stop_lon": 140.7976033
+	},
+	{
+		"stop_id": "_01",
+		"stop_code": "",
+		"stop_name": "東青森",
+		"furigana": "ひがしあおもり",
+		"stop_lat": 40.8105362,
+		"stop_lon": 140.7832439
+	},
+	{
+		"stop_id": "_01",
+		"stop_code": "",
+		"stop_name": "筒井",
+		"furigana": "つつい",
+		"stop_lat": 34.620261,
+		"stop_lon": 135.7807714
+	}
+]

@@ -1,2 +1,0 @@
-﻿feed_publisher_name,feed_publisher_url,feed_contact_url,feed_contact_email,feed_lang,feed_start_date,feed_end_date,feed_version
-青森市企業局交通部,http://www.city.aomori.aomori.jp/koutsu/top.html,http://www.city.aomori.aomori.jp/koutsu/top.html,sonosujiya@gmail.com,ja,20240401,20250331,20240401_2024年04月01日（2024.04.01改正◆夏◆ver16） その筋屋 1.701
